@@ -50,7 +50,7 @@ function Footer(){
         </div>
 
         <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-            <p>© 2023 Enzu, Inc. All rights reserved.</p>
+            <p>© 2023 ProConstruct, Inc. All rights reserved.</p>
             <ul className="list-unstyled d-flex">
             <li className="ms-3"><a className="link-dark" href="#">
             <i className="fa-brands fa-square-twitter fa-2x"></i> </a></li>
