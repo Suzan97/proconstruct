@@ -26,17 +26,25 @@ function Login(props){
         // submit Data
         axios.post(baseUrl+'customer/login/', formData)
         .then(function (response) {
-            console.log(response);
             if (response.data.bool === false) {
                 setFormError(true);
                 setErrorMsg(response.data.msg);
+            }else{
+                localStorage.setItem('customer_login', true);
+                localStorage.setItem('customer_username', response.data.username);
+                setFormError(false);
+                setErrorMsg('');
             }
         })
         .catch(function (error) {
             console.log(error);
         });
     };
-    console.log("Rendering:", formError, errorMsg);
+    const checkCustomer = localStorage.getItem('customer_login');
+    if(checkCustomer){
+        window.location.href='/customer/dashboard'
+    }
+
 
     const buttonEnable=(loginFormData.username!=='') && (loginFormData.password!=='')
 
