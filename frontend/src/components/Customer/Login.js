@@ -31,7 +31,7 @@ function Login(props){
                 setErrorMsg(response.data.msg);
             }else{
                 localStorage.setItem('customer_login', true);
-                localStorage.setItem('customer_username', response.data.username);
+                localStorage.setItem('customer_username', response.data.user);
                 setFormError(false);
                 setErrorMsg('');
             }
@@ -42,7 +42,7 @@ function Login(props){
     };
     const checkCustomer = localStorage.getItem('customer_login');
     if(checkCustomer){
-        window.location.href='/customer/dashboard'
+        window.location.href='/customer/dashboard';
     }
 
 
