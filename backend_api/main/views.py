@@ -2,6 +2,7 @@ from . import serializers
 from rest_framework import generics,permissions,pagination,viewsets
 from . import models
 
+from django.db import IntegrityError
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
@@ -94,32 +95,45 @@ def customer_register(request):
     email=request.POST.get('email')
     mobile=request.POST.get('mobile')
     password=request.POST.get('password')
-
-    user=User.objects.create(
-        first_name = first_name,
-        last_name = last_name,
-        username = username,
-        email = email,
-        password = password,
-    )
-    if user:
-        #Register Customer
-        customer = models.Customer.objects.create(
-            user = user,
-            mobile = mobile
+    try:
+        user=User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            username = username,
+            email = email,
+            password = password,
         )
-        msg={
-            'bool':True,
-            'user':user.id,
-            'customer':customer.id,
-            'msg': 'Registration succesful!!!'
+        if user:
+            try:
+            #Register Customer
+                customer = models.Customer.objects.create(
+                    user = user,
+                    mobile = mobile
+                )
+                msg={
+                    'bool':True,
+                    'user':user.id,
+                    'customer':customer.id,
+                    'msg': 'Registration succesful!!!'
+                    
+                }
+            except IntegrityError:
+                msg={
+                        'bool':False,
+                        'msg':'Mobile number already exists'
+                    }
             
-        }
-    else:
+            
+        else:
+            msg={
+                'bool':False,
+                'msg':'Sorry... Try again!!'
+            }
+    except IntegrityError:
         msg={
-            'bool':False,
-            'msg':'Sorry... Try again!!'
-        }
+                'bool':False,
+                'msg':'Username already exists'
+            }
     return JsonResponse(msg) 
 
 #Order
