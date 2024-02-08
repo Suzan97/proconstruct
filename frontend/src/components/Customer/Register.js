@@ -37,8 +37,8 @@ function Register(props){
         axios.post(baseUrl+'customer/register/', formData)
         .then(function (response) {
             if (response.data.bool === false) {
-                setFormError(true);
                 setErrorMsg(response.data.msg);
+                setSuccessMsg('');
             }else{
                 setRegisterFormData({
                     "first_name":'',
@@ -68,7 +68,8 @@ function Register(props){
                     <h4 className='card-header'>Register</h4>
                 <div className='card-body'>
                 <p className="text-muted">*All fields are required</p>
-                {successMsg && <p>{successMsg}</p> }
+                {successMsg && <p className="text-success">{successMsg}</p> }
+                {errorMsg && <p className="text-danger">{errorMsg}</p>}
                     <form>
                         <div className="mb-3">
                             <label for="firstName" className="form-label">First name</label>
