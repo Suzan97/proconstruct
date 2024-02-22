@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from .models import Customer
 
 # Create your views here.
 
@@ -96,44 +97,43 @@ def customer_register(request):
     mobile=request.POST.get('mobile')
     password=request.POST.get('password')
     try:
-        user=User.objects.create(
-            first_name = first_name,
-            last_name = last_name,
-            username = username,
-            email = email,
-            password = password,
+
+        # Check if the username already exists
+        if User.objects.filter(username=username).exists():
+            raise IntegrityError("Username already exists")
+        
+        # Check if the email already exists
+        if User.objects.filter(email=email).exists():
+            raise IntegrityError("Email already exists")
+        
+        # Check if the mobile number already exists
+        if Customer.objects.filter(mobile=mobile).exists():
+            raise IntegrityError("Mobile number already exists")
+
+        # Create the user
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
         )
-        if user:
-            try:
-            #Register Customer
-                customer = models.Customer.objects.create(
-                    user = user,
-                    mobile = mobile
-                )
-                msg={
-                    'bool':True,
-                    'user':user.id,
-                    'customer':customer.id,
-                    'msg': 'Registration succesful!!!'
-                    
-                }
-            except IntegrityError:
-                msg={
-                        'bool':False,
-                        'msg':'Mobile number already exists'
-                    }
-            
-            
-        else:
-            msg={
-                'bool':False,
-                'msg':'Sorry... Try again!!'
-            }
-    except IntegrityError:
-        msg={
-                'bool':False,
-                'msg':'Username already exists'
-            }
+
+        # Create the customer
+        customer = Customer.objects.create(user=user, mobile=mobile)
+
+        msg = {
+            'bool': True,
+            'user': user.id,
+            'customer': customer.id,
+            'msg': 'Registration successful!!!'
+        }
+    except IntegrityError as e:
+        msg = {
+            'bool': False,
+            'msg': str(e)
+        }
+
     return JsonResponse(msg) 
 
 #Order

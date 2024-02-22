@@ -4,7 +4,6 @@ import React, { useState } from "react";
 function Register(props){
     
     const baseUrl = 'http://127.0.0.1:8000/api/';
-    const [formError,setFormError] = useState(false);
     const [errorMsg,setErrorMsg] = useState('');
     const [successMsg,setSuccessMsg] = useState('');
     const [registerFormData, setRegisterFormData] = useState({
@@ -48,7 +47,7 @@ function Register(props){
                     "mobile":'',
                     "password":'',
                 });
-                setFormError(false);
+                setErrorMsg('');
                 setSuccessMsg(response.data.msg);
             }
         })
