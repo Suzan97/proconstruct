@@ -1,5 +1,10 @@
 import {Link} from 'react-router-dom';
-function Header(){
+import React, { useContext } from 'react';
+import { UserContext } from '../Context';
+
+function Header() {
+   const userContext = useContext(UserContext);
+   console.log(userContext);
     return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-warning">
     <div className="container">

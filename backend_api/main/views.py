@@ -79,7 +79,7 @@ def customer_login(request):
     if user:
         msg={
             'bool':True,
-            'user':user.username
+            'user':user.username,
         }
     else:
         msg={
