@@ -6,12 +6,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserContext } from './Context';
 
+const checkCustomer = localStorage.getItem('customer_login');
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <UserContext.Provider value="1">
+      <UserContext.Provider value={checkCustomer}>
         <App />
       </UserContext.Provider>
     </Router>

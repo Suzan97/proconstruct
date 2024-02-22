@@ -4,7 +4,7 @@ import { UserContext } from '../Context';
 
 function Header() {
    const userContext = useContext(UserContext);
-   console.log(userContext);
+
     return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-warning">
     <div className="container">
@@ -25,11 +25,19 @@ function Header() {
               My Account
             </a>
             <ul className="dropdown-menu">
-              <li><Link className="dropdown-item" to="/customer/register">Register</Link></li>
-              <li><Link className="dropdown-item" to="/customer/login">Login</Link></li>
-              <li><hr className="dropdown-divider" /></li>
+            {userContext  != 'true' &&
+              <>
+                <li><Link className="dropdown-item" to="/customer/register">Register</Link></li>
+                <li><Link className="dropdown-item" to="/customer/login">Login</Link></li>
+                <li><hr className="dropdown-divider" /></li>
+              </>
+            }
+            {userContext  == 'true' &&
+            <>       
               <li><Link className="dropdown-item" to="/customer/dashboard">Dashboard</Link></li>
               <li><Link className="dropdown-item" to="/customer/logout">Logout</Link></li>
+            </>
+            }
             </ul>
           </li>
           <li className="nav-item dropdown">
