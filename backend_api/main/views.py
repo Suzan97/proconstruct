@@ -11,14 +11,14 @@ from .models import Customer
 
 # Create your views here.
 
-#Vendors
-class VendorList(generics.ListCreateAPIView):
-    queryset = models.Vendor.objects.all()
-    serializer_class = serializers.VendorSerializer
+#Proffesionals
+class ProffesionalList(generics.ListCreateAPIView):
+    queryset = models.Proffesionals.objects.all()
+    serializer_class = serializers.ProffesionalSerializer
 
-class VendorDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Vendor.objects.all()
-    serializer_class = serializers.VendorDetailSerializer
+class ProffesionalDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Proffesionals.objects.all()
+    serializer_class = serializers.ProffesionalDetailSerializer
 
 #Product
 class ProductList(generics.ListCreateAPIView):

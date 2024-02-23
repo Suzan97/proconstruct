@@ -5,11 +5,13 @@ from django.contrib.auth.models import User
 
 #Seller Models
 
-class Vendor(models.Model):
+class Proffesionals(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mobile = models.PositiveBigIntegerField(unique=True)
+    profile_img = models.ImageField(upload_to='prof_profile/', null=True)
     address = models.TextField(null=True)
 
-    def __str__(self):
+    def  __str__(self):
         return self.user.username
 
 #Category
@@ -23,7 +25,7 @@ class ProductCategory(models.Model):
 #Product
 class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True, related_name='category_product')
-    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
+    proffesional = models.ForeignKey(Proffesionals, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=200)
     detail = models.TextField(null=True)
     price = models.FloatField()
@@ -44,6 +46,7 @@ class Product(models.Model):
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     mobile = models.PositiveBigIntegerField(unique=True)
+    profile_img = models.ImageField(upload_to='customer_profile/', null=True)
 
     def __str__(self):
         return self.user.username

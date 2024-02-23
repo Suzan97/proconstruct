@@ -2,29 +2,29 @@ from dataclasses import fields
 from rest_framework import serializers
 from . import models
 
-class VendorSerializer(serializers.ModelSerializer):
+class ProffesionalSerializer(serializers.ModelSerializer):
     class Meta:
-        model= models.Vendor 
+        model= models.Proffesionals
         fields = ['id', 'user', 'address']
 
     def __init__(self, *args, **kwargs):
-        super(VendorSerializer, self).__init__(*args, **kwargs)
+        super(ProffesionalSerializer, self).__init__(*args, **kwargs)
         # self.Meta.depth = 1
  
-class VendorDetailSerializer(serializers.ModelSerializer):
+class ProffesionalDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model= models.Vendor 
+        model= models.Proffesionals
         fields = ['id', 'user', 'address']
 
     def __init__(self, *args, **kwargs):
-        super(VendorDetailSerializer, self).__init__(*args, **kwargs)
+        super(ProffesionalDetailSerializer, self).__init__(*args, **kwargs)
         # self.Meta.depth = 1
 
 class ProductListSerializer(serializers.ModelSerializer):
     product_ratings = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model= models.Product
-        fields = ['id', 'category', 'vendor', 'title', 'detail', 'price', 'tag_list', 'slug', 'product_ratings']
+        fields = ['id', 'category', 'proffesional', 'title', 'detail', 'price', 'tag_list', 'slug', 'product_ratings']
  
     def __init__(self, *args, **kwargs):
         super(ProductListSerializer, self).__init__(*args, **kwargs)
@@ -41,7 +41,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         many = True
         model= models.Product
-        fields = ['id', 'category', 'vendor', 'title', 'detail', 'price', 'tag_list', 'slug', 'product_ratings', 'product_imgs']
+        fields = ['id', 'category', 'proffesional', 'title', 'detail', 'price', 'tag_list', 'slug', 'product_ratings', 'product_imgs']
 
     def __init__(self, *args, **kwargs):
         super(ProductDetailSerializer, self).__init__(*args, **kwargs)
