@@ -34,10 +34,7 @@ def proffesional_register(request):
         # Check if the username already exists
         if User.objects.filter(username=username).exists():
             raise IntegrityError("Username already exists")
-        
-        # Check if the email already exists
-        if User.objects.filter(email=email).exists():
-            raise IntegrityError("Email already exists")
+
         
         # Check if the mobile number already exists
         if Proffesionals.objects.filter(mobile=mobile).exists():
@@ -49,17 +46,16 @@ def proffesional_register(request):
             password=password,
             first_name=first_name,
             last_name=last_name,
-            address=address,
             email=email,
         )
 
         # Create the customer
-        customer = Proffesionals.objects.create(user=user, mobile=mobile)
+        proffesional = Proffesionals.objects.create(user=user, mobile=mobile, address=address)
 
         msg = {
             'bool': True,
             'user': user.id,
-            'customer': customer.id,
+            'proffesional': proffesional.id,
             'msg': 'Registration successful!!!'
         }
     except IntegrityError as e:
