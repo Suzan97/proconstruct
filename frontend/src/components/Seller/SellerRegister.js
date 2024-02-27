@@ -12,6 +12,7 @@ function SellerRegister(props){
         "username":'',
         "email":'',
         "mobile":'',
+        "address":'',
         "password":'',
     });
 
@@ -31,9 +32,10 @@ function SellerRegister(props){
         formData.append('email', registerFormData.email);
         formData.append('mobile',registerFormData.mobile);
         formData.append('password', registerFormData.password);
+        formData.append('address', registerFormData.address);
         
         // submit Data
-        axios.post(baseUrl+'customer/register/', formData)
+        axios.post(baseUrl+'proffesionals/register/', formData)
         .then(function (response) {
             if (response.data.bool === false) {
                 setErrorMsg(response.data.msg);
@@ -45,6 +47,7 @@ function SellerRegister(props){
                     "username":'',
                     "email":'',
                     "mobile":'',
+                    "address":'',
                     "password":'',
                 });
                 setErrorMsg('');
@@ -57,7 +60,7 @@ function SellerRegister(props){
     };
 
     const buttonEnable=(registerFormData.first_name!=='') && (registerFormData.last_name!=='') && (registerFormData.username!=='')
-    && (registerFormData.email!=='') && (registerFormData.mobile!=='') && (registerFormData.password!=='')
+    && (registerFormData.email!=='') && (registerFormData.mobile!=='') && (registerFormData.password!=='') && (registerFormData.address!=='')
 
     return (
        <section className='container mt-4'>
@@ -95,6 +98,12 @@ function SellerRegister(props){
                         <div className="mb-3">
                             <label for="pwd" className="form-label">Password</label>
                             <input type="password" name="password" onChange={inputHandler} value={registerFormData.password} className="form-control" id="pwd"/>
+                        </div>
+                        <div className="mb-3">
+                            <label for="address" className="form-label">Address</label>
+                            <textarea type="address" name="address" onChange={inputHandler} value={registerFormData.address} className="form-control" id="address"
+                            textarea/>
+                            
                         </div>
                         <button type="button" disabled={!buttonEnable} onClick={submitHandler} className="btn btn-warning">Submit</button>
                     </form>

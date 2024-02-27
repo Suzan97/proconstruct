@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from .models import Customer
+from .models import Customer, Proffesionals
 
 # Create your views here.
 
@@ -19,6 +19,57 @@ class ProffesionalList(generics.ListCreateAPIView):
 class ProffesionalDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Proffesionals.objects.all()
     serializer_class = serializers.ProffesionalDetailSerializer
+
+@csrf_exempt
+def proffesional_register(request):  
+    first_name=request.POST.get('first_name')
+    last_name=request.POST.get('last_name')
+    username=request.POST.get('username')
+    email=request.POST.get('email')
+    mobile=request.POST.get('mobile')
+    address=request.POST.get('address')
+    password=request.POST.get('password')
+    try:
+
+        # Check if the username already exists
+        if User.objects.filter(username=username).exists():
+            raise IntegrityError("Username already exists")
+        
+        # Check if the email already exists
+        if User.objects.filter(email=email).exists():
+            raise IntegrityError("Email already exists")
+        
+        # Check if the mobile number already exists
+        if Proffesionals.objects.filter(mobile=mobile).exists():
+            raise IntegrityError("Mobile number already exists")
+
+        # Create the user
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            address=address,
+            email=email,
+        )
+
+        # Create the customer
+        customer = Proffesionals.objects.create(user=user, mobile=mobile)
+
+        msg = {
+            'bool': True,
+            'user': user.id,
+            'customer': customer.id,
+            'msg': 'Registration successful!!!'
+        }
+    except IntegrityError as e:
+        msg = {
+            'bool': False,
+            'msg': str(e)
+        }
+
+    return JsonResponse(msg) 
+
 
 #Product
 class ProductList(generics.ListCreateAPIView):

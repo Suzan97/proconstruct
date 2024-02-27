@@ -10,6 +10,7 @@ urlpatterns = [
     #Proffesionals
     path('proffesionals/',views.ProffesionalList.as_view()),
     path('proffesional/<int:pk>/',views.ProffesionalDetail.as_view()),
+    path('proffesional/register/',views.proffesional_register,name='proffesional_register'),
     #Product
     path('products/',views.ProductList.as_view()),
     path('products/<str:tag>',views.TagProductList.as_view()),

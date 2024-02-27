@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 //Assets
 import logo from '../../logo.svg';
 import SellarSidebar from './SellarSidebar';
-function VendorOrders(){
+function ProffesionalOrders(){
     return (
        <section className=' container mt-4'>
         <div className='row'>
@@ -74,4 +74,4 @@ function VendorOrders(){
 
     )
 }
-export default VendorOrders;
+export default ProffesionalOrders;
