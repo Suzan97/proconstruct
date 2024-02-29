@@ -4,6 +4,7 @@ import { UserContext } from '../Context';
 
 function Header() {
    const userContext = useContext(UserContext);
+   const checkProffesional = localStorage.getItem('proffesional_login');
 
     return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-warning">
@@ -25,14 +26,14 @@ function Header() {
               My Account
             </a>
             <ul className="dropdown-menu">
-            {userContext  != 'true' &&
+            {userContext  !== 'true' &&
               <>
                 <li><Link className="dropdown-item" to="/customer/register">Register</Link></li>
                 <li><Link className="dropdown-item" to="/customer/login">Login</Link></li>
 
               </>
             }
-            {userContext  == 'true' &&
+            {userContext  === 'true' &&
             <>       
               <li><Link className="dropdown-item" to="/customer/dashboard">Dashboard</Link></li>
               <li><Link className="dropdown-item" to="/customer/logout">Logout</Link></li>
@@ -42,14 +43,23 @@ function Header() {
           </li>
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Vendor Panel
+              Proffesional Panel
             </a>
             <ul className="dropdown-menu">
-              <li><Link className="dropdown-item" to="/seller/register">Register</Link></li>
-              <li><Link className="dropdown-item" to="/seller/login">Login</Link></li>
-              <li><hr className="dropdown-divider" /></li>
-              <li><Link className="dropdown-item" to="/seller/dashboard">Dashboard</Link></li>
-              <li><Link className="dropdown-item" href="/seller/login">Logout</Link></li>
+              {
+                checkProffesional &&
+                <>
+                <li><Link className="dropdown-item" to="/seller/dashboard">Dashboard</Link></li>
+                <li><Link className="dropdown-item" to="/seller/logout">Logout</Link></li>
+                </>  
+              }
+              {
+                !checkProffesional &&
+                <>
+                <li><Link className="dropdown-item" to="/seller/register">Register</Link></li>
+                <li><Link className="dropdown-item" to="/seller/login">Login</Link></li>
+                </>
+              }
             </ul>
           </li>
           <li className="nav-item">

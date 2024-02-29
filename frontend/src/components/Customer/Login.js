@@ -23,13 +23,14 @@ function Login(props){
         formData.append('username', loginFormData.username);
         formData.append('password', loginFormData.password);
         
-        // submit Data
+        // Input details
         axios.post(baseUrl+'customer/login/', formData)
         .then(function (response) {
             if (response.data.bool === false) {
                 setFormError(true);
                 setErrorMsg(response.data.msg);
             }else{
+                localStorage.setItem('customer_id', response.data.id);
                 localStorage.setItem('customer_login', true);
                 localStorage.setItem('customer_username', response.data.user);
                 setFormError(false);

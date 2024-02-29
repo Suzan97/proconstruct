@@ -66,6 +66,26 @@ def proffesional_register(request):
 
     return JsonResponse(msg) 
 
+@csrf_exempt
+def proffesional_login(request):
+    username=request.POST.get('username')
+    password=request.POST.get('password')
+    user=authenticate(username=username,password=password)
+
+    if user:
+        proffesional = models.Proffesionals.objects.get(user=user)
+        msg={
+            'bool':True,
+            'user':user.username,
+            'id':proffesional.id,
+        }
+    else:
+        msg={
+            'bool':False,
+            'msg':'Invalid username or password'
+        }
+    return JsonResponse(msg) 
+
 
 #Product
 class ProductList(generics.ListCreateAPIView):
@@ -124,9 +144,11 @@ def customer_login(request):
     user=authenticate(username=username,password=password)
 
     if user:
+        customer = models.Customer.objects.get(user=user)
         msg={
             'bool':True,
             'user':user.username,
+            'id':customer.id,
         }
     else:
         msg={
