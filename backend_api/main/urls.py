@@ -28,6 +28,7 @@ urlpatterns = [
     #Orders
     path('orders/',views.OrderList.as_view()),
     path('order/<int:pk>/',views.OrderDetail.as_view()),
+
    
 ]
 urlpatterns+=router.urls
